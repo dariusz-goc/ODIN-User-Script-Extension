@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         ODIN Extension
 // @description  New features for ODIN! Starting with Auto-refresh for Queues
-// @namespace    http://sacoapartments.com/
+// @namespace    saco-apartments
 // @author       Dariusz Goc
 // @version      1.0.0
 // @require      https://odin.crm11.dynamics.com/_static/_common/scripts/jquery-2.1.1.min.js
