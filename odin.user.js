@@ -3,7 +3,7 @@
 // @description  New features for ODIN! Starting with Auto-refresh for Queues
 // @namespace    http://sacoapartments.com/
 // @author       Dariusz Goc
-// @version      0.0.2
+// @version      0.0.3
 // @require      https://odin.crm11.dynamics.com/_static/_common/scripts/jquery-2.1.1.min.js
 // @updateURL    https://github.com/dariusz-goc/ODIN-User-Script-Extension/raw/master/odin.user.js
 // @downloadURL  https://github.com/dariusz-goc/ODIN-User-Script-Extension/raw/master/odin.user.js
@@ -35,10 +35,8 @@ var settings = {
             }
         }
 
-        $("a#refreshButtonLink").mousedown(promptUserSettings);
-
         const refreshAutomatically = function(){
-            if($(".ms-crm-List-SelectedRow").length == 0){
+            if($(".ms-crm-List-SelectedRow, .ms-crm-List-Row:hover").length == 0 && unsafeWindow.focusFlag == 1){
                 $("a#refreshButtonLink")[0].click();
                 console.log("Auto-refresh refreshed (" + (new Date()).getSeconds() + ")");
             }
@@ -57,6 +55,19 @@ var settings = {
 
             console.log("Auto-refresh initialized (" + unsafeWindow.refreshIntervalHandle + ")");
         };
+
+        $(window).bind("focus", function(event){
+            unsafeWindow.focusFlag = 1;
+            refreshAutomatically();
+            console.log("Auto-refresh window focus changed (" + unsafeWindow.focusFlag + ")");
+        });
+
+        $(window).bind("blur", function(event){
+            unsafeWindow.focusFlag = 0;
+            console.log("Auto-refresh window focus changed (" + unsafeWindow.focusFlag + ")");
+        });
+
+        $("a#refreshButtonLink").mousedown(promptUserSettings);
 
         initRefresh();
     });
