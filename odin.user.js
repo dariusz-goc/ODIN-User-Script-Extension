@@ -36,7 +36,7 @@ var settings = {
         }
 
         const refreshAutomatically = function(){
-            if($(".ms-crm-List-SelectedRow, .ms-crm-List-Row:hover").length == 0 && unsafeWindow.focusFlag == 1){
+            if($(".ms-crm-List-SelectedRow, .ms-crm-List-Row:hover").length == 0 && document.hidden == false){
                 $("a#refreshButtonLink")[0].click();
                 console.log("Auto-refresh refreshed (" + (new Date()).getSeconds() + ")");
             }
@@ -56,15 +56,9 @@ var settings = {
             console.log("Auto-refresh initialized (" + unsafeWindow.refreshIntervalHandle + ")");
         };
 
-        $(window).bind("focus", function(event){
-            unsafeWindow.focusFlag = 1;
+        $(window).focus(function(event){
             refreshAutomatically();
-            console.log("Auto-refresh window focus changed (" + unsafeWindow.focusFlag + ")");
-        });
-
-        $(window).bind("blur", function(event){
-            unsafeWindow.focusFlag = 0;
-            console.log("Auto-refresh window focus changed (" + unsafeWindow.focusFlag + ")");
+            console.log("Auto-refresh window focused");
         });
 
         $("a#refreshButtonLink").mousedown(promptUserSettings);
